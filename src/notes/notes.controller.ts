@@ -19,7 +19,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('notes')
-@Controller('notes')
+@Controller('api/notes')
 @UseGuards(JwtAuthGuard, ThrottlerGuard)
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}
@@ -39,15 +39,15 @@ export class NotesController {
   @Get('/search')
   async search(
     @Request() req,
-    @Query('query') query: string,
-    @Query('page') page: number = 1,
-    @Query('pageSize') pageSize: number = 10,
+    @Query('q') query: string,
+    @Query('page') page?,
+    @Query('pageSize') pageSize?,
   ) {
     return await this.notesService.search(
       query,
       req.user.userId,
-      page,
-      pageSize,
+      page || 1,
+      pageSize || 10,
     );
   }
 

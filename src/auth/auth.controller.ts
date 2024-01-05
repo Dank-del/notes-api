@@ -16,7 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('auth')
-@Controller('auth')
+@Controller('api/auth')
 @UseGuards(ThrottlerGuard)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -30,7 +30,7 @@ export class AuthController {
       id: user.id,
     });
   }
-  @Post('/register')
+  @Post('/signup')
   async register(@Request() req, @Body() body: SignUpDto) {
     return this.authService.signUp(body.username, body.password, body.name);
   }
