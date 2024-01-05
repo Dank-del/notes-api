@@ -54,10 +54,14 @@ export class NotesController {
   @Get()
   async findAll(
     @Request() req,
-    @Query('page') page: number = 1,
-    @Query('pageSize') pageSize: number = 10,
+    @Query('page') page?,
+    @Query('pageSize') pageSize?,
   ) {
-    return await this.notesService.findAll(req.user.id, page, pageSize);
+    return await this.notesService.findAll(
+      req.user.id,
+      page || 1,
+      pageSize || 10,
+    );
   }
 
   @Get(':id')
